@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="ie-edge">
+		<meta name="viewport" content="width=device-width,initial-scale=1.0">
+		<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <style>
+            .rounded {
+                vertical-align: middle;
+                width: 200px;
+                height: 200px;
+                border-radius: 50%;
+            }
+            .label{
+                color: blue;
+            }
+            .span{
+                font-weight: bold;
+            }
+            .span {
+                text-transform: uppercase;
+            }
+            
+        </style>
+    </head>
+    <title>HOME</title>
+	<body>
+        <nav class="navbar navbar-dark bg-dark">
+            <a class="navbar-brand" href="#">HOME</a>
+            <a href="/logout" class="btn btn-secondary" id="logout">LOGOUT</a>
+        </nav>
+        <div class="card" style="width: 18rem; margin: 5px auto;">
+            <img class="card-img-top" src="default.jpg" alt="Card image cap">
+            <div class="card-body" style="text-align: center;">
+                <label class="label">ID: </label> <span id="id" class="span"></span><br>
+                <label class="label">NAME: </label> <span id="fname" class="span"></span> <span id="lname" class="span"></span><br>        
+            </div>
+          </div>
+        <div class="card" style="width: 18rem; margin: 5px auto;">
+		<h3>LED Control</h3>
+            <a href="/on" class="w3-button w3-blue">ON</a>
+            <a href="/off" class="w3-button w3-blue">OFF</a>
+            <a href="/blink" class="w3-button w3-blue">BLINK</a>
+            <a href="/stop" class="w3-button w3-blue">STOP</a>
+            <a href="/toggle" class="w3-button w3-blue">TOGGLE</a>
+        </div>
+        <script>
+            // Use fetch to get data from the server
+            fetch("/userdata")
+                .then(response => response.json())
+                .then(data => {
+                    // Update the HTML elements with the retrieved data
+                    document.getElementById("id").textContent = data.ID;    
+                    document.getElementById("fname").textContent = data.fname;
+                    document.getElementById("lname").textContent = data.lname;
+                })
+                .catch(error => console.error(error));
+        </script>
+	</body>
+   
+</html>

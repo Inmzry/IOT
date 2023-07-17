@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="ie-edge">
+		<meta name="viewport" content="width=device-width,initial-scale=1.0">
+		<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+	<style>
+		.card {
+            margin: auto;
+            width: 20%;
+            border: 3px solid gray;
+            padding: 10px;
+        }
+		.text-right {
+			text-align: right;
+			margin-right: 16%;
+		}
+	</style>
+	</head>
+	<body>
+		<nav class="navbar navbar-dark bg-dark">
+            <a class="navbar-brand" href="#">LOGIN</a>
+            
+        </nav>
+		<div class="card" style="width: 22rem; margin: 5% auto;">
+			
+			<form class="form" method="POST" action="/login">
+				<div class="card-body" style="text-align: center; padding-left: 10% ;"></div>
+					<p>
+						<label>Username:</label>
+						<input type="text" name="username"></input>
+					</p>
+					<p>
+						<label>Password:</label>
+						<input type="password" name="password" style="padding-left: 7px;"></input>
+					</p>	
+					<div class="text-right">	
+						<button class="btn btn-primary" type="submit">LOG IN</button>
+					</div>
+					<a href="sign-up.html" style="color:rgb(46, 142, 46)">Click to SIGN-UP</a><br><br>
+				</div>
+			</form>
+			
+		</div>
+		<!--  
+		<h3>LED Control</h3>
+		<a href="/on" class="w3-button w3-blue" style="width:100%">ON</a><br><br>
+		<a href="/off" class="w3-button w3-blue" style="width:100%">OFF</a><br><br>
+		<a href="/blink" class="w3-button w3-blue" style="width:100%">BLINK</a><br><br>
+		<a href="/stop" class="w3-button w3-blue" style="width:100%">STOP</a><br><br>
+		<a href="/toggle" class="w3-button w3-blue" style="width:100%">TOGGLE</a>
+		--> 
+	</body>
+</html>
