@@ -22,7 +22,28 @@
             .span {
                 text-transform: uppercase;
             }
-            
+            .text-right {
+			    text-align: right;
+			    margin-right: 0;
+		    }
+            .avatar {
+                vertical-align: middle;
+                width: 90%;
+                height: 250px;
+                border-radius: 50%;
+                margin: 0 0 0 13px;
+                }
+            .containers{
+                bottom: 0;
+                width: 100%;
+                padding-top: 4.3rem; 
+			}	
+            .card1 {
+            margin: auto;
+            padding: 10px;
+			border-radius: 20px;
+			box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+        }	
         </style>
     </head>
     <title>HOME</title>
@@ -31,11 +52,16 @@
             <a class="navbar-brand" href="#">HOME</a>
             <a href="/logout" class="btn btn-secondary" id="logout">LOGOUT</a>
         </nav>
-        <div class="card" style="width: 18rem; margin: 5px auto;">
-            <img class="card-img-top" src="default.jpg" alt="Card image cap">
+        <div class="card1" style="width: 18rem; margin: 5px auto;">
+            <div class="img">
+                <img src="" alt="Avatar" class="avatar" id="profile-image">
+            </div>
             <div class="card-body" style="text-align: center;">
                 <label class="label">ID: </label> <span id="id" class="span"></span><br>
-                <label class="label">NAME: </label> <span id="fname" class="span"></span> <span id="lname" class="span"></span><br>        
+                <label class="label">NAME: </label> <span id="fname" class="span"></span> <span id="lname" class="span"></span><br>
+                <div class="text-right">	
+                    <a  href="Edit-profile.html" class="btn btn-outline-dark btn-sm" type="submit">Edit Profile</a>
+                </div>
             </div>
           </div>
         <div class="card" style="width: 18rem; margin: 5px auto;">
@@ -46,6 +72,22 @@
             <a href="/stop" class="w3-button w3-blue">STOP</a>
             <a href="/toggle" class="w3-button w3-blue">TOGGLE</a>
         </div>
+        <div class="containers">
+			<footer style="background-color: #deded5;">
+				<div class="container p-4">
+					<div class="myDiv">
+						<h2>This is an IOT project</h2>
+						<p>Test test test</p>
+					</div>
+				</div>
+				<div class="text-center p-3 bg-dark text-white">
+				© 2023 Copyright:
+				<a class="text-white" href="https://mdbootstrap.com/">MDBootstrap.com</a>
+				</div>
+				<!-- Copyright -->
+			</footer>
+		</div>
+
         <script>
             // Use fetch to get data from the server
             fetch("/userdata")
@@ -55,9 +97,13 @@
                     document.getElementById("id").textContent = data.ID;    
                     document.getElementById("fname").textContent = data.fname;
                     document.getElementById("lname").textContent = data.lname;
+                    const profileImage = document.getElementById("profile-image");
+                    profileImage.src = data.image? data.image : "default.jpg";
+                    profileImage.alt = data.image ? "Card image" : "Default card image";
                 })
                 .catch(error => console.error(error));
         </script>
+        
 	</body>
    
 </html>

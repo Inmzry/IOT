@@ -12,22 +12,30 @@
             width: 20%;
             border: 3px solid gray;
             padding: 10px;
+			border-radius: 20px;
+			box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+
         }
 		.text-right {
 			text-align: right;
 			margin-right: 0;
 		}
+		.containers{
+			bottom: 0;
+            width: 100%;
+            padding-top: 8.4rem; 
+			}		
 	</style>
 	</head>
 	<body>
 		<nav class="navbar navbar-dark bg-dark">
             <a class="navbar-brand" href="#">REGISTRATION</a>
-            <a href="index.html" class="btn btn-secondary" id="logout">back</a>
+            <a href="index.html" class="btn btn-secondary" id="logout">login</a>
             
         </nav>
 		<div class="card" style="width: 25rem; margin: 5% auto;">
-			<form class="form" method="POST" action="/sign-up">
-                <p>SIGN-UP form</p>
+			<form class="form" method="POST" action="/sign-up" id="signup-form">
+                <h3>SIGN-UP form</h3>
 				<div class="card-body" style="text-align: center; padding-left: 10% ;"></div>
                     <p>
                         <input type="text" class="form-control" name="firstname" placeholder="firstname" required/></input>
@@ -39,10 +47,10 @@
 						<input type="text" class="form-control" name="username" placeholder="username" required/></input>
 					</p>
 					<p>
-						<input type="password" class="form-control" name="password" placeholder="password" required/></input>
+						<input type="password" class="form-control" name="password" placeholder="password" id="pass" required/></input>
 					</p>
                     <p>
-						<input type="password" class="form-control" name="repeatpassword" placeholder="repeat-password" required/></input>
+						<input type="password" class="form-control" name="repeatpassword" placeholder="repeat-password" id="pass2" required/></input>
 					</p>		
 					<div class="text-right">	
 						<button class="btn btn-primary" type="submit">SIGN-UP</button>
@@ -52,5 +60,20 @@
 			
 		</div>
 		
+		<div class="containers">
+			<footer style="background-color: #deded5;">
+				<div class="container p-4">
+					<div class="myDiv">
+						<h2>This is an IOT project</h2>
+						<p>Test test test</p>
+					</div>
+				</div>
+				<div class="text-center p-3 bg-dark text-white">
+				© 2023 Copyright:
+				<a class="text-white" href="https://mdbootstrap.com/">MDBootstrap.com</a>
+				</div>
+				<!-- Copyright -->
+			</footer>
+		</div>
 	</body>
 </html>

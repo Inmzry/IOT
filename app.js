@@ -12,6 +12,7 @@ var led;
 var servo;
 let username = '';
 let password = '';
+let id;
 
 // create database connection
 var db = mysql.createPool({
@@ -22,6 +23,7 @@ var db = mysql.createPool({
 });
 
 var app = express(); // create an instance of express
+const bodyParser = require('body-parser');
 
 // Set up session middleware
 app.use(
@@ -35,9 +37,11 @@ app.use(
 // Set up static file serving
 app.use(express.static(path.join(__dirname, "/public")));
 
+
 // Set the data parser
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
 var board = new five.Board({
   port: "COM3"
@@ -87,7 +91,7 @@ app.post("/sign-up", function(req, res) {
       } else {
         // Check if the password and repeat password match
         if (pass !== repeatpass) {
-          res.status(400).json("PASSWORD_MISMATCH");
+          res.send('<script>alert("Password mismatch"); window.history.back();</script>');
         } else {
           // Insert the new user into the database
           var insertSql =
@@ -97,7 +101,8 @@ app.post("/sign-up", function(req, res) {
               console.log(err);
               res.status(500).json("ERROR");
             } else {
-              res.status(200).json("SIGNUP_SUCCESS");
+              var alertScript = "<script>alert('YOU ARE NOW REGISTERED'); window.location.href = '/index.html';</script>";
+              res.send(alertScript); 
             }
           });
         }
@@ -119,7 +124,8 @@ app.post("/login", function (req, res) {
     if (err) {
       res.status(500).json("ERROR");
     } else if (results.length === 0) {
-      res.status(401).json("INVALID USER");
+      var alertScript = "<script>alert('INVALID USER! try again...'); window.location.href = '/index.html';</script>";
+      res.send(alertScript); 
     } else {
       const sql2 =
         "SELECT ID, fname, lname FROM `user` WHERE `username`='"+username +"' and `password`='"+password +"'";
@@ -166,15 +172,53 @@ app.get("/logout", function (req, res) {
 app.get("/userdata", requireLogin, function (req, res) {
   // Retrieve user data from the database
   const sql =
-    "SELECT ID, fname, lname FROM `user` WHERE `username`='"+req.session.username +"' and `password`='"+req.session.password +"'";
+    "SELECT ID, fname, lname, image FROM `user` WHERE `username`='"+req.session.username +"' and `password`='"+req.session.password +"'";
   db.query(sql, function (err, results) {
     if (err) {
       res.status(500).json("ERROR");
-    } else {
+    } else { 
+      id= results[0].ID;
       res.json(results[0]);
     }
   });
 });
+
+
+app.post("/edit-profile", function(req, res) {
+  // Get the data from the sign-up form
+  idnum = id;
+  user = req.body.username;
+  pass = req.body.password;
+  repeatpass = req.body.repeatpassword;
+  firstname = req.body.firstname;
+  lastname = req.body.lastname;
+
+  var sql = "SELECT * FROM `user` WHERE `id` = ?";
+  db.query(sql, [idnum], function(err, results) {
+    if (err) {
+      res.status(500).json("ERROR");
+    }else {
+      // Check if the password and repeat password match
+      if (pass !== repeatpass) {
+        res.send('<script>alert("Password mismatch"); window.history.back();</script>');
+      } else {
+        var updateSql =
+          "UPDATE `user` SET `FNAME`='"+firstname+"',`LNAME`='"+lastname +"',`username`='"+user+"',`password`='"+pass+"' WHERE `id`='"+idnum+"'";
+        db.query(updateSql, [firstname, lastname, user, pass], function(err, result) {
+          if (err) {
+            console.log(err);
+            res.status(500).json("ERROR");
+          } else {
+            var alertScript = "<script>alert('Update successful, please re-login'); window.location.href = '/index.html';</script>";
+            res.send(alertScript);
+            
+          }
+        });
+      }
+    }
+  });
+});
+
 
 
 app.get("/", requireLogin, function (req, res) {
