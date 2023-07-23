@@ -7,6 +7,14 @@
 		<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
         <style>
+            body {
+                background-image: url('background.png');
+                background-repeat: no-repeat;
+                background-size: cover;
+                height: 100vh;
+                width: 100vw;
+                margin: 0px;
+			}
             .rounded {
                 vertical-align: middle;
                 width: 200px;
@@ -22,10 +30,6 @@
             .span {
                 text-transform: uppercase;
             }
-            .text-right {
-			    text-align: right;
-			    margin-right: 0;
-		    }
             .avatar {
                 vertical-align: middle;
                 width: 90%;
@@ -36,21 +40,39 @@
             .containers{
                 bottom: 0;
                 width: 100%;
-                padding-top: 4.3rem; 
+                padding-top: 6.7rem; 
 			}	
             .card1 {
-            margin: auto;
-            padding: 10px;
-			border-radius: 20px;
-			box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-        }	
+                margin: auto;
+                padding: 10px;
+                background-color: rgb(255, 253, 253);
+                border-radius: 20px;
+                box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+            
+            }
+            
+            
         </style>
     </head>
     <title>HOME</title>
 	<body>
         <nav class="navbar navbar-dark bg-dark">
             <a class="navbar-brand" href="#">HOME</a>
-            <a href="/logout" class="btn btn-secondary" id="logout">LOGOUT</a>
+            
+            <div class="dropdown">
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <img src="gear.svg" alt="" class=""></a>
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                  <a class="dropdown-item" href="Edit-profile.html" type="button">Edit Profile</a>
+                <form method="post" action="/remove">
+                  <button class="dropdown-item" type="submit">Remove Account</button>
+                </form>
+                  
+                </div>
+                <a href="/logout" class="btn btn-secondary" id="logout">LOGOUT</a>
+              </div>
+            
         </nav>
         <div class="card1" style="width: 18rem; margin: 5px auto;">
             <div class="img">
@@ -58,10 +80,7 @@
             </div>
             <div class="card-body" style="text-align: center;">
                 <label class="label">ID: </label> <span id="id" class="span"></span><br>
-                <label class="label">NAME: </label> <span id="fname" class="span"></span> <span id="lname" class="span"></span><br>
-                <div class="text-right">	
-                    <a  href="Edit-profile.html" class="btn btn-outline-dark btn-sm" type="submit">Edit Profile</a>
-                </div>
+                <span id="fname" class="span"></span> <span id="lname" class="span"></span><br>
             </div>
           </div>
         <div class="card" style="width: 18rem; margin: 5px auto;">
@@ -87,7 +106,8 @@
 				<!-- Copyright -->
 			</footer>
 		</div>
-
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
         <script>
             // Use fetch to get data from the server
             fetch("/userdata")
@@ -103,6 +123,7 @@
                 })
                 .catch(error => console.error(error));
         </script>
+        
         
 	</body>
    

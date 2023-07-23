@@ -50,7 +50,7 @@ var board = new five.Board({
 // manage the arduino API
 board.on("ready", function () {
   led = new five.Led(13); // instantiate the led API
-  // servo = new five.Servo(9); // instantiate the servo API
+  servo = new five.Servo(9); // instantiate the servo API
   lcd = new five.LCD({
     pins: [7, 8, 9, 10, 11, 12]
   });
@@ -58,8 +58,8 @@ board.on("ready", function () {
 
   // inject repl control to led API
   board.repl.inject({
-    led: led
-    // servo:servo,
+    led: led,
+    servo:servo
   });
 });
 
@@ -135,7 +135,6 @@ app.post("/login", function (req, res) {
         } else {
           console.log("Name:", results[0].fname, results[0].lname);
           fname = results[0].fname;
-          console.log(fname);
           lcd.cursor(0, 1).print(fname);
           led.on();
         }
@@ -146,7 +145,7 @@ app.post("/login", function (req, res) {
       
       lcd.cursor(0, 0).print("Successfully Logged In");
       //lcd.cursor(0, 1).print(fname);
-      //servo.max();
+      servo.max();
       button.on("press", function() {
         console.log( "Button pressed" );
         led.toggle();
@@ -184,7 +183,7 @@ app.get("/userdata", requireLogin, function (req, res) {
 });
 
 
-app.post("/edit-profile", function(req, res) {
+app.post("/edit-profile", requireLogin, function(req, res) {
   // Get the data from the sign-up form
   idnum = id;
   user = req.body.username;
@@ -192,6 +191,7 @@ app.post("/edit-profile", function(req, res) {
   repeatpass = req.body.repeatpassword;
   firstname = req.body.firstname;
   lastname = req.body.lastname;
+  
 
   var sql = "SELECT * FROM `user` WHERE `id` = ?";
   db.query(sql, [idnum], function(err, results) {
@@ -218,7 +218,28 @@ app.post("/edit-profile", function(req, res) {
     }
   });
 });
+app.post("/remove", requireLogin, function(req, res) {
 
+  // SQL query to delete the user with the given ID
+  const deleteQuery = "DELETE FROM user WHERE `username`='"+req.session.username +"' and `password`='"+req.session.password +"'";
+
+  db.query(deleteQuery, function(err, result) {
+   
+    if (err) {
+      return res.status(500).json({ error: 'Error deleting user from database' });
+    }
+
+    // If the query ran successfully, check if any rows were affected (user found and deleted)
+    if (result.affectedRows > 0) {
+        led.off();
+        var alertScript = "<script>alert('User Deleted Successfully'); window.location.href = '/index.html';</script>";
+        res.send(alertScript);
+    } else {
+      // If no rows were affected, the user with the given ID was not found
+      return res.status(404).json({ error: 'User not found' });
+    }
+  });
+});
 
 
 app.get("/", requireLogin, function (req, res) {
